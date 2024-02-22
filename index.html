@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absen Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        #responseContainer {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <button id="absenButton">Absen</button>
+        <button id="getResponseButton">Dapatkan Respons</button>
+        <div id="responseContainer"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#absenButton").click(function () {
+                absen();
+            });
+
+            $("#getResponseButton").click(function () {
+                getResponse();
+            });
+
+            function absen() {
+                var absenSettings = {
+                    "url": "https://sidatu.lombokutarakab.go.id/api/tapAtt?lat=-8.358036781970384&long=116.15994689227418&employee_id=2376&opd_id=16",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    "data": {
+                        "ssn": "198209152014061004",
+                        "password": "kominf0234",
+                        "device_id": "62"
+                    }
+                };
+
+                $.ajax(absenSettings).done(function (response) {
+                    $("#responseContainer").html("<p>Absen berhasil!</p>");
+                    $("#responseContainer").append("<p>Respon:</p>");
+                    $("#responseContainer").append("<pre>" + JSON.stringify(response, null, 2) + "</pre>");
+                }).fail(function (error) {
+                    console.error(error);
+                    $("#responseContainer").html("<p>Absen gagal!</p>");
+                });
+            }
+
+            function getResponse() {
+                // Implementasi untuk mendapatkan respons dari API jika diperlukan
+                // Anda dapat menyesuaikan sesuai kebutuhan
+            }
+        });
+    </script>
+</body>
+
+</html>
